@@ -10,13 +10,14 @@ public final class TabNativeTests {
     private int ticks;
     private int reloadTick;
     private boolean done;
+    private PlayerRenderingProbe player;
     public TabNativeTests() { NeoForge.EVENT_BUS.addListener(this::tick); }
     private void tick(ServerTickEvent.Post event) {
         if(done || ++ticks<100)return;
         if(reloadTick>0 && ticks-reloadTick<40)return;
         try {
             var api=TabAPI.getInstance();
-            if(ticks>600)throw new AssertionError("TAB player counts did not become available");
+            if(ticks>600)throw new AssertionError(player==null?"TAB counts did not become available":player.describe());
             String network=request(api,"%bungee_total%");
             if(!network.equals("0"))return;
             for(String server:new String[]{"main","hub","creative","dev"})
@@ -29,9 +30,12 @@ public final class TabNativeTests {
                 event.getServer().getCommands().performPrefixedCommand(event.getServer().createCommandSourceStack(),"tab reload");
                 reloadTick=ticks;return;
             }
-            if(ticks-reloadTick<40)return;
+            if(player==null) { player=new PlayerRenderingProbe(event.getServer());return; }
+            if(!player.rendered())return;
+            player.close();player=null;
             done=true;System.out.println("OKO_TAB_NATIVE_TESTS_PASSED");
         } catch(Throwable failure) {
+            if(player!=null)try { player.close(); } catch(Throwable cleanup) { failure.addSuppressed(cleanup); }
             done=true;failure.printStackTrace();System.out.println("OKO_TAB_NATIVE_TESTS_FAILED");event.getServer().halt(false);
         }
     }

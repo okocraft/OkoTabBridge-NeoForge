@@ -43,3 +43,5 @@ def obtainTabFixture=tasks.register('obtainTabFixture') {
 }
 sourceSets.testmod.compileClasspath=files(tabFixture)+sourceSets.testmod.compileClasspath
 tasks.named('compileTestmodJava') { dependsOn obtainTabFixture }
+
+dependencies { testmodCompileOnly 'net.luckperms:api:5.5' }

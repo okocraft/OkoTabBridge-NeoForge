@@ -10,4 +10,4 @@ TABは config/tab に置きます。mainのTAB設定を元に、DQMのサーバ�
 
 ./gradlew build（Java25）。公式TAB API6.1.2をcompileOnlyで使用し、APIやTAB本体は配布jarへ同梱しません。TAB6.2.1と一緒にサーバー側へ置きます。
 
-単体試験は実TCP接続でstatusリクエスト、人数、切断・不正応答・タイムアウトを確認します。native TABと既存DQM構成での結合確認も行います。
+単体試験は実TCP接続でstatusリクエスト、人数、切断・不正応答・タイムアウトを確認します。native TABでは人数値、再読込後の登録、常設UI無効化に加え、LuckPermsの称号が実プレイヤー一覧packetとヘッダーへ反映されることを確認します。実クライアント画面の目視とは分けた試験です。既存DQM構成との結合確認も行います。

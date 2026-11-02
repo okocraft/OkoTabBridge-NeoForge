@@ -23,6 +23,9 @@ if(!await exists(join(server,'libraries/net/neoforged/neoforge/26.2.0.88/unix_ar
 await copyFile(join(root,'build/test-dependencies/TAB.v6.2.1.jar'),join(server,'mods/TAB.jar'));
 await copyFile(join(root,'build/libs/OkoTabBridge-NeoForge-0.1.0.jar'),join(server,'mods/OkoTabBridge-NeoForge.jar'));
 await copyFile(join(root,'build/testmods/oko-tab-test.jar'),join(server,'mods/oko-tab-test.jar'));
+const lpLocal=join(workspace,'WorldGuard-NeoForge/build/smoke/server/mods/LuckPerms-NeoForge-5.5.85.jar');
+if(await exists(lpLocal))await copyFile(lpLocal,join(server,'mods/LuckPerms-NeoForge-5.5.85.jar'));
+else { const r=await fetch('https://cdn.modrinth.com/data/Vebnzrzj/versions/cLEqLHhz/LuckPerms-NeoForge-5.5.85.jar');assert(r.ok,'LuckPerms download failed');await writeFile(join(server,'mods/LuckPerms-NeoForge-5.5.85.jar'),Buffer.from(await r.arrayBuffer())); }
 const actual=await realpath(server);assert(actual.startsWith(await realpath(root)+sep));
 for(const name of ['world','config/tab']){const target=resolve(actual,name);assert(target.startsWith(actual+sep));await rm(target,{recursive:true,force:true});}
 await mkdir(join(server,'config/tab'),{recursive:true});
@@ -39,6 +42,7 @@ const config={
  'scoreboard-teams':{enabled:false},'belowname-objective':{enabled:false},bossbar:{enabled:false},scoreboard:{enabled:false},'playerlist-objective':{enabled:false},'proxy-support':{enabled:false},'config-version':7
 };
 await writeFile(join(server,'config/tab/config.yml'),JSON.stringify(config,null,2));
+await writeFile(join(server,'config/tab/groups.yml'),JSON.stringify({_DEFAULT_:{tabprefix:'%luckperms-prefix%',customtabname:'%player%',tabsuffix:'%luckperms-suffix%'}}));
 const args='libraries/net/neoforged/neoforge/26.2.0.88/'+(process.platform==='win32'?'win_args.txt':'unix_args.txt');
 const child=spawn(java,['@user_jvm_args.txt','@'+args,'nogui'],{cwd:server,stdio:['pipe','pipe','pipe'],windowsHide:true});
 const log=createWriteStream(join(work,'server-output.log'));

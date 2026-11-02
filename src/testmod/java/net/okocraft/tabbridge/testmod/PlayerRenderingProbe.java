@@ -49,13 +49,18 @@ final class PlayerRenderingProbe implements AutoCloseable {
         if(actor==null || !actor.isLoaded())return false;
         String prefix=api.getTabListFormatManager().getOriginalReplacedPrefix(actor);
         if(prefix==null || !prefix.contains("TAB_TEST_TITLE"))return false;
-        boolean name=false,header=false;
+        String expectedHeader=System.getProperty("tab.fixture.expectedHeader","OKOCRAFT");
+        String expectedFooter=System.getProperty("tab.fixture.expectedFooter","");
+        boolean name=false,header=false,footer=expectedFooter.isEmpty();
         for(var packet:packets) {
             if(packet instanceof ClientboundPlayerInfoUpdatePacket update)
                 for(var entry:update.entries()) if(entry.displayName()!=null && entry.displayName().getString().contains("TAB_TEST_TITLE"))name=true;
-            if(packet instanceof ClientboundTabListPacket tab && tab.header().getString().contains("OKOCRAFT"))header=true;
+            if(packet instanceof ClientboundTabListPacket tab) {
+                if(tab.header().getString().contains(expectedHeader))header=true;
+                if(tab.footer().getString().contains(expectedFooter))footer=true;
+            }
         }
-        return name&&header;
+        return name&&header&&footer;
     }
     String describe() {
         var api=TabAPI.getInstance();var actor=api.getPlayer(ID);

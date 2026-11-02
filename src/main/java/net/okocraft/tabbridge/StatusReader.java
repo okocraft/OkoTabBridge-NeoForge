@@ -17,7 +17,7 @@ final class StatusReader {
             activeSocket=socket;
             socket.connect(new InetSocketAddress(endpoint.host(),endpoint.port()),timeoutMillis);
             socket.setSoTimeout(timeoutMillis);
-            var output=new DataOutputStream(socket.getOutputStream());
+            var output=new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
             var bytes=new ByteArrayOutputStream();
             var handshake=new DataOutputStream(bytes);
             varInt(handshake,0); varInt(handshake,-1);

@@ -1,0 +1,26 @@
+{
+  "refreshSeconds": 15,
+  "timeoutMillis": 1000,
+  "network": {
+    "host": "mod.okocraft.net",
+    "port": 25565
+  },
+  "servers": {
+    "main": {
+      "host": "127.0.0.1",
+      "port": 25541
+    },
+    "hub": {
+      "host": "127.0.0.1",
+      "port": 25530
+    },
+    "creative": {
+      "host": "127.0.0.1",
+      "port": 25542
+    },
+    "dev": {
+      "host": "127.0.0.1",
+      "port": 25531
+    }
+  }
+}

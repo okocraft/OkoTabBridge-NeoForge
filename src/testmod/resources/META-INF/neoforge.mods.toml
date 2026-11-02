@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[11,)"
+license="MIT"
+[[mods]]
+modId="oko_tab_test"
+version="1.0"
+displayName="TAB native contract tests"
+[[dependencies.oko_tab_test]]
+modId="oko_tab_bridge"
+type="required"
+versionRange="[0.1,)"
+ordering="AFTER"
+side="SERVER"

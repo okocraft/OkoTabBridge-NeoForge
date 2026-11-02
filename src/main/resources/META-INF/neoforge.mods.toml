@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[11,)"
+license="MIT"
+[[mods]]
+modId="oko_tab_bridge"
+version="${version}"
+displayName="OkoTabBridge"
+authors="OKOCRAFT"
+description="Network player counts for OKOCRAFT TAB on NeoForge."
+[[dependencies.oko_tab_bridge]]
+modId="minecraft"
+type="required"
+versionRange="[26.2,26.3)"
+side="SERVER"
+[[dependencies.oko_tab_bridge]]
+modId="neoforge"
+type="required"
+versionRange="[26.2.0.88,26.3)"
+side="SERVER"
+[[dependencies.oko_tab_bridge]]
+modId="tab"
+type="required"
+versionRange="[6.2.1,)"
+ordering="AFTER"
+side="SERVER"

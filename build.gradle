@@ -45,3 +45,5 @@ sourceSets.testmod.compileClasspath=files(tabFixture)+sourceSets.testmod.compile
 tasks.named('compileTestmodJava') { dependsOn obtainTabFixture }
 
 dependencies { testmodCompileOnly 'net.luckperms:api:5.5' }
+
+jar { from 'LICENSE' }
